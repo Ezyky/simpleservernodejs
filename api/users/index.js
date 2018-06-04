@@ -5,7 +5,7 @@ const controller = require('./user.controller');
 
 router.get('/', controller.getAllUser);
 router.post('/', controller.addUser);
-router.put('/', controller.updateUser);
+router.put('/:id', controller.updateUser);
 
 router.get('/:id', controller.getOneUser);
 

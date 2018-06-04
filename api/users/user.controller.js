@@ -25,7 +25,7 @@ module.exports = {
             var user = new User(userParams);
             try {
                 var userSave = await UserRepository.save(user);
-                return res.status(400).json({response: userSave});   
+                return res.status(200).json({response: userSave});   
             } catch (error) {
                 res.json({response: 'Bad request'});
             }
@@ -37,7 +37,7 @@ module.exports = {
     getAllUser : async (req, res) => {
         try {
             var allUser = await UserRepository.getAll();
-            res.status(400).json({response: allUser});
+            res.status(200).json({response: allUser});
         } catch (error) {
             res.json({response: 'Bad request'});
         } 
@@ -48,7 +48,7 @@ module.exports = {
         if(id) {
             try {
                 var allUser = await UserRepository.getOne(id);
-                res.status(400).json({response: allUser});
+                res.status(200).json({response: allUser});
             } catch (error) {
                 res.json({response: 'Bad request'});
             }
@@ -59,15 +59,16 @@ module.exports = {
 
     updateUser : async (req, res) => {
         var userParams = req.body;
-        if(userParams) {
+        var id = req.params.id;
+        if(userParams && id) {
             try {
-                var user = await UserRepository.getOneBy({email: userParams.email});
+                var user = await UserRepository.getOneBy({_id: id});
                 user.lastname = userParams.lastname;
                 user.firstname = userParams.firstname;
                 user.password = userParams.password;
                 user.username = userParams.username;
                 var allUser = await UserRepository.save(user);
-                res.status(400).json({response: allUser});
+                res.status(200).json({response: allUser});
             } catch (error) {
                 res.json({response: 'Bad request'});
             }
